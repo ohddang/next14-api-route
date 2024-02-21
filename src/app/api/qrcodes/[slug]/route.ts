@@ -1,17 +1,36 @@
 import { NextResponse } from "next/server";
+import dbConnect from "@/db/dbConnect";
+import ShortLink from "@/db/models/ShortLink";
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
+  try {
+    await dbConnect();
+  } catch (e) {
+    console.log("dbconnect error " + e);
+  }
+
   const qrcodeId = params.slug;
-  return NextResponse.json(qrcodeId, { status: 200 });
+
+  const shortLink = await ShortLink.findById(qrcodeId);
+
+  return NextResponse.json(shortLink, { status: 200 });
 }
 
 export async function PATCH(request: Request, { params }: { params: { slug: string } }) {
+  try {
+    await dbConnect();
+  } catch (e) {
+    console.log("dbconnect error " + e);
+  }
+
   const body = await request.json();
-  body.id = params.slug;
-  return NextResponse.json(body, { status: 200 });
+  const newShortLink = await ShortLink.findByIdAndUpdate(params.slug, body, { update: true });
+
+  return NextResponse.json(newShortLink, { status: 200 });
 }
 
-export async function DELETE(request: Request, response: Response) {
-  // response code 204 not supported by next14
-  return new Response(null, { status: 204 });
+export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
+  // 204 response code not supported by next14
+  await ShortLink.findByIdAndDelete(params.slug);
+  return new NextResponse(null, { status: 204 });
 }

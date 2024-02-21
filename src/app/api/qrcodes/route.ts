@@ -1,29 +1,28 @@
+import dbConnect from "@/db/dbConnect";
+import ShortLink from "@/db/models/ShortLink";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  return NextResponse.json(
-    [
-      {
-        id: "abc",
-        title: "위키피디아 Next.js",
-        url: "https://en.wikipedia.org/wiki/Next.js",
-      },
-      {
-        id: "def",
-        title: "코드잇 자유게시판",
-        url: "https://codeit.kr/community/general",
-      },
-      {
-        id: "ghi",
-        title: "코드잇 질문답변",
-        url: "https://www.codeit.kr/community/questions",
-      },
-    ],
-    { status: 200 }
-  );
+  try {
+    await dbConnect();
+  } catch (e) {
+    console.log("dbconnect error " + e);
+  }
+
+  const shortLinks = await ShortLink.find();
+
+  return NextResponse.json(shortLinks, { status: 200 });
 }
 
 export async function POST(request: Request) {
+  try {
+    await dbConnect();
+  } catch (e) {
+    console.log("dbconnect error " + e);
+  }
+
   const body = await request.json();
-  return NextResponse.json(body, { status: 201 });
+  const newShortLink = await ShortLink.create(body);
+
+  return NextResponse.json(newShortLink, { status: 201 });
 }

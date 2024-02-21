@@ -1,25 +1,24 @@
-# GET http://localhost:3000/api/qrcodes
+GET http://localhost:3000/api/qrcodes
 
 # POST http://localhost:3000/api/qrcodes
 # Content-Type: application/json
 
 # {
-#   "title": "위키피디아 Next.js",
+#   "title": "하나 더 위키피디아 Next.js",
 #   "url": "https://en.wikipedia.org/wiki/Next.js"
 # }
 
 # PATCH http://localhost:3000/api/qrcodes
 
-# GET http://localhost:3000/api/qrcodes/abc
+# GET http://localhost:3000/api/qrcodes/65d5970f40a9de86488f192b
 
-# PATCH http://localhost:3000/api/qrcodes/abc
+# PATCH http://localhost:3000/api/qrcodes/65d5970f40a9de86488f192b
 # Content-Type: application/json
 
 # {
-#  "title": "위키피디아 Next.js",
-#  "url": "https://en.wikipedia.org/wiki/Next.js"
+#  "title": "이름 변경 위키피디아 Next.js"
 # }
 
-# DELETE http://localhost:3000/api/qrcodes/abc
+# DELETE http://localhost:3000/api/qrcodes/65d5970f40a9de86488f192b
 
-POST http://localhost:3000/api/qrcodes/abc
+# POST http://localhost:3000/api/qrcodes/abc
