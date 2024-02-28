@@ -23,6 +23,12 @@ export async function PATCH(request: Request, { params }: { params: { slug: stri
     console.log("dbconnect error " + e);
   }
 
+  function assertIsString(value: any): asserts value is string {
+    if (typeof value !== "string") {
+      throw new Error("Value is not a string");
+    }
+  }
+
   const body = await request.json();
   const newShortLink = await ShortLink.findByIdAndUpdate(params.slug, body, { update: true });
 
